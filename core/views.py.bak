@@ -1,0 +1,50 @@
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views import View
+import requests
+
+API_KEY = "3d425d472aaa4fa123eca9feacdc3cf1e78d71e542722e1ea9411b8770264ab7"
+GOPHISH_URI = "https://127.0.0.1:3333/"
+
+class Users(View):
+    def get(self, request):
+        headers = {'Authorization': API_KEY}
+        data = requests.get(f"{GOPHISH_URI }/users", verify=False).json
+        return render(request, 'users.html', {'users': data})
+def getusers(request):
+    headers = {'Authorization': API_KEY}
+    data = requests.get(f"{GOPHISH_URI }/users", verify=False).json
+    return render(request, 'users.html', {'users': data})
+
+def getsendprofile(request):
+    headers = {'Authorization': API_KEY}
+    data = requests.get(f"{GOPHISH_URI }/sendprofile", verify=False).json
+    return render(request, 'sendprofile.html', {'sendprofile': data})
+
+def getcampaigns(request):
+    headers = {'Authorization': API_KEY}
+    data = requests.get(f"{GOPHISH_URI }/campaigns", verify=False).json
+    return render(request, 'campaigns.html', {'campaigns': data})
+
+def gettemplates(request):
+    headers = {'Authorization': API_KEY}
+    data = requests.get(f"{GOPHISH_URI }/templates", verify=False).json
+    return render(request, 'templates.html', {'templates': data})
+
+def  getcampaignresults(request):
+    camps = []
+    campsid = []
+    getcamps = getcampaigns(request)
+    for ids in getcampaigns(request):
+        if ids is not None:
+            camps.append(ids[ids])
+    for ids in campsid:
+        headers = {'Authorization': API_KEY}
+        data = requests.get(f"{GOPHISH_URI }/campaigns/{str(ids)}/results", verify=False).json
+        camps.append(data)
+    return render(request, 'campaignresults.html', {'campaignresults': camps})
+
+def test_auth(request):
+    headers = {'Authorization': API_KEY}
+    data = requests.get(GOPHISH_URI,verify=False).json
+    return render(request, 'test_auth.html', {'test_auth': data})
