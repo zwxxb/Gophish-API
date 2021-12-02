@@ -4,8 +4,8 @@ from core.views import *
 app_name = 'core'
 
 urlpatterns = [
-    path('SendProfiles/<int:id>', SendingProfiles.as_view(), name='SendingProfiles'),
-    path('SendProfile/', SendingProfiles.as_view(), name='SendingProfiles'),
+    path('SendProfiles/<str:id>', SendingProfiles.as_view(), name='SendingProfiles'),
+    # path('SendProfile/', SendingProfiles.as_view(), name='SendingProfiles'),
     path('Reset/', Reset.as_view(), name='Reset'),
     path('Templates/', Templates.as_view(), name='Templates'),
     path('Templates/<int:id>', Templates.as_view(), name='Template'),

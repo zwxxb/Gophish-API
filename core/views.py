@@ -15,13 +15,9 @@ class Reset(View):
         return render(response.json, 'setting.html')
 
 class SendingProfiles(View):
-    def get(self, request):
-        response = requests.get(GOPHISH_URI + "api/smtp/", headers={"Authorization": API_KEY})
+    def get(self, request, *args, **kwargs):
+        response = requests.get(GOPHISH_URI + "api/smtp/"+kwargs['id'], headers={"Authorization": API_KEY})
         print(response.json())
-        return render(response.json(), 'Users.html')
-
-    def get(self, request, id):
-        response = requests.get(GOPHISH_URI + "api/smtp/" + id, headers={"Authorization": API_KEY})
         return render(response.json(), 'Users.html')
 
     def post(self, request):
